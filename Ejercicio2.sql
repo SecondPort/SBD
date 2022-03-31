@@ -1,16 +1,16 @@
 /*Se tienen las siguientes relaciones:
- 
- ALUMNOS (nro_alumno, nom_alumno, nro_doc_alumno)
- 
- CARRERAS (cod_carrera, nom_carrera, nota_aprob_examen_final)
- 
- MATERIAS (cod_carrera, cod_materia, nom_materia, cuat_materia, optativa)
- 
- MATRICULAS (nro_alumno, cod_carrera, ano_ingreso)
+
+ALUMNOS (nro_alumno, nom_alumno, nro_doc_alumno)
+
+CARRERAS (cod_carrera, nom_carrera, nota_aprob_examen_final)
+
+MATERIAS (cod_carrera, cod_materia, nom_materia, cuat_materia, optativa)
+
+MATRICULAS (nro_alumno, cod_carrera, ano_ingreso)
 
 EXAMENES (nro_alumno, cod_carrera, cod_materia, fecha_examen, nro_libro, nro_acta, nota_examen)
 Identificar claves primarias, claves alternativas y claves foráneas en SQL
- */
+*/
 
 CREATE TABLE ALUMNOS (
     nro_alumno INTEGER NOT NULL,

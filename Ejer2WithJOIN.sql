@@ -8,8 +8,7 @@ MATERIAS (cod_carrera, cod_materia, nom_materia, cuat_materia, optativa)
 
 MATRICULAS (nro_alumno, cod_carrera, ano_ingreso)
 
-EXAMENES (nro_alumno, cod_carrera, cod_materia, fecha_examen, nro_libro, nro_acta, nota_examen)
-programar las tablas usando sql*/
+EXAMENES (nro_alumno, cod_carrera, cod_materia, fecha_examen, nro_libro, nro_acta, nota_examen)*/
 
 CREATE TABLE ALUMNOS (
 	nro_alumno INTEGER NOT NULL,

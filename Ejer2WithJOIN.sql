@@ -57,9 +57,9 @@ CREATE TABLE EXAMENES (
 	FOREIGN KEY (cod_carrera, cod_materia) REFERENCES MATERIAS(cod_carrera, cod_materia)
 );
 
+
 /* 2.	Programar las siguientes consultas:
 Mostrar nro_alumno, nom_alumno, cod_carrera, nom_carrera y promedio de los alumnos que ingresaron en 1995 y tienen promedio >= 7 y han rendido más de 20 exámenes finales (no considerar los ausentes)*/
-
 SELECT A.nro_alumno, A.nom_alumno, C.cod_carrera, C.nom_carrera, AVG(E.nota_examen)
 FROM ALUMNOS A
 JOIN MATRICULAS M ON A.nro_alumno = M.nro_alumno
@@ -70,7 +70,6 @@ GROUP BY A.nro_alumno, A.nom_alumno, C.cod_carrera, C.nom_carrera;
 
 
 /*Cantidad de materias aprobadas por el alumno 'SANCHEZ' en la carrera 'CONTADOR PUBLICO'*/
-
 SELECT COUNT(E.nota_examen)
 FROM ALUMNOS A
 JOIN MATRICULAS M ON A.nro_alumno = M.nro_alumno
@@ -78,8 +77,8 @@ JOIN CARRERAS C ON M.cod_carrera = C.cod_carrera
 JOIN EXAMENES E ON M.nro_alumno = E.nro_alumno AND M.cod_carrera = E.cod_carrera
 WHERE A.nom_alumno = 'SANCHEZ' AND C.nom_carrera = 'CONTADOR PUBLICO' AND E.nota_examen >= C.nota_aprob_examen_final;
 
-/*Cantidad de materias no aprobadas por el alumno 'SANCHEZ' en la carrera 'CONTADOR PUBLICO*/
 
+/*Cantidad de materias no aprobadas por el alumno 'SANCHEZ' en la carrera 'CONTADOR PUBLICO*/
 SELECT COUNT(E.nota_examen)
 FROM ALUMNOS A
 JOIN MATRICULAS M ON A.nro_alumno = M.nro_alumno
@@ -87,8 +86,8 @@ JOIN CARRERAS C ON M.cod_carrera = C.cod_carrera
 JOIN EXAMENES E ON M.nro_alumno = E.nro_alumno AND M.cod_carrera = E.cod_carrera
 WHERE A.nom_alumno = 'SANCHEZ' AND C.nom_carrera = 'CONTADOR PUBLICO' AND E.nota_examen < C.nota_aprob_examen_final;
 
-/*Mostrar nro_alumno y nom_alumno de aquellos alumnos que no han rendido exámenes finales de ninguna carrera desde el 1/1/99.*/
 
+/*Mostrar nro_alumno y nom_alumno de aquellos alumnos que no han rendido exámenes finales de ninguna carrera desde el 1/1/99.*/
 SELECT A.nro_alumno, A.nom_alumno
 FROM ALUMNOS A
 WHERE NOT EXISTS (
@@ -100,7 +99,6 @@ WHERE NOT EXISTS (
 
 
 /*Mostrar nro_alumno y nom_alumno de aquellos alumnos de la carrera 10 que ingresaron en 1996 y tienen aprobadas todas las materias obligatorias de dicha carrera hasta el tercer cuatrimestre inclusive.*/
-
 SELECT A.nro_alumno, A.nom_alumno
 FROM ALUMNOS A
 JOIN MATRICULAS M ON A.nro_alumno = M.nro_alumno

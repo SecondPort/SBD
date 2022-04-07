@@ -93,8 +93,7 @@ WHERE NOT EXISTS (
 	SELECT *
 	FROM MATRICULAS M
 	JOIN EXAMENES E ON M.nro_alumno = E.nro_alumno AND M.cod_carrera = E.cod_carrera
-	WHERE A.nro_alumno = M.nro_alumno AND E.fecha_examen >= '1999-01-01'
-);
+	WHERE A.nro_alumno = M.nro_alumno AND E.fecha_examen >= '1999-01-01');
 
 
 /*Mostrar nro_alumno y nom_alumno de aquellos alumnos de la carrera 10 que ingresaron en 1996 y tienen aprobadas todas las materias obligatorias de dicha carrera hasta el tercer cuatrimestre inclusive.*/
@@ -106,14 +105,15 @@ JOIN MATERIAS MA ON C.cod_carrera = MA.cod_carrera
 JOIN EXAMENES E ON M.nro_alumno = E.nro_alumno AND M.cod_carrera = E.cod_carrera AND MA.cod_materia = E.cod_materia
 WHERE M.ano_ingreso = 1996 AND MA.optativa = FALSE AND MA.cuat_materia <= 3 AND E.nota_examen >= C.nota_aprob_examen_final;
 
-/*Obtener aquellos alumnos que se ha recibido y tienen todo aprobado*/
+
+/*Obtener aquellos alumnos que se han recibido de una carrera y tienen todas las materias aprobadas a excepción de las materias optativas que pueden o no estar aprobadas*/
 SELECT A.nro_alumno, A.nom_alumno, A.nro_doc_alumno
 FROM ALUMNOS A
 INNER JOIN MATRICULAS M ON A.nro_alumno = M.nro_alumno
 INNER JOIN CARRERAS C ON M.cod_carrera = C.cod_carrera
 INNER JOIN MATERIAS MA ON C.cod_carrera = MA.cod_carrera
 INNER JOIN EXAMENES E ON MA.cod_carrera = E.cod_carrera AND MA.cod_materia = E.cod_materia
-WHERE E.nota_examen >= C.nota_aprob_examen_final
+WHERE E.nota_examen >= C.nota_aprob_examen_final AND MA.optativa = FALSE
 GROUP BY A.nro_alumno, A.nom_alumno, A.nro_doc_alumno
-HAVING COUNT(*) = (SELECT COUNT(*) FROM MATERIAS WHERE cod_carrera = M.cod_carrera);
+HAVING COUNT(MA.cod_materia) = (SELECT COUNT(cod_materia) FROM MATERIAS WHERE cod_carrera = M.cod_carrera AND optativa = FALSE);
 

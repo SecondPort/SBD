@@ -1,31 +1,28 @@
 /*Se tienen las siguientes relaciones:
-
-ALUMNOS (nro_alumno, nom_alumno, nro_doc_alumno)
-
-CARRERAS (cod_carrera, nom_carrera, nota_aprob_examen_final)
-
-MATERIAS (cod_carrera, cod_materia, nom_materia, cuat_materia, optativa)
-
-MATRICULAS (nro_alumno, cod_carrera, ano_ingreso)
-
-EXAMENES (nro_alumno, cod_carrera, cod_materia, fecha_examen, nro_libro, nro_acta, nota_examen)
-Identificar claves primarias, claves alternativas y claves foráneas en SQL
-*/
-
+ 
+ ALUMNOS (nro_alumno, nom_alumno, nro_doc_alumno)
+ 
+ CARRERAS (cod_carrera, nom_carrera, nota_aprob_examen_final)
+ 
+ MATERIAS (cod_carrera, cod_materia, nom_materia, cuat_materia, optativa)
+ 
+ MATRICULAS (nro_alumno, cod_carrera, ano_ingreso)
+ 
+ EXAMENES (nro_alumno, cod_carrera, cod_materia, fecha_examen, nro_libro, nro_acta, nota_examen)
+ Identificar claves primarias, claves alternativas y claves foráneas en SQL
+ */
 CREATE TABLE ALUMNOS (
     nro_alumno INTEGER NOT NULL,
     nom_alumno VARCHAR(50) NOT NULL,
     nro_doc_alumno INTEGER NOT NULL,
     PRIMARY KEY (nro_alumno)
 );
-
 CREATE TABLE CARRERAS (
     cod_carrera INTEGER NOT NULL,
     nom_carrera VARCHAR(50) NOT NULL,
     nota_aprob_examen_final INTEGER NOT NULL,
     PRIMARY KEY (cod_carrera)
 );
-
 CREATE TABLE MATERIAS (
     cod_carrera INTEGER NOT NULL,
     cod_materia INTEGER NOT NULL,
@@ -34,7 +31,6 @@ CREATE TABLE MATERIAS (
     optativa INTEGER NOT NULL,
     PRIMARY KEY (cod_carrera, cod_materia)
 );
-
 CREATE TABLE MATRICULAS (
     nro_alumno INTEGER NOT NULL,
     cod_carrera INTEGER NOT NULL,
@@ -43,7 +39,6 @@ CREATE TABLE MATRICULAS (
     FOREIGN KEY (nro_alumno) REFERENCES ALUMNOS(nro_alumno),
     FOREIGN KEY (cod_carrera) REFERENCES CARRERAS(cod_carrera)
 );
-
 CREATE TABLE EXAMENES (
     nro_alumno INTEGER NOT NULL,
     cod_carrera INTEGER NOT NULL,
@@ -56,7 +51,6 @@ CREATE TABLE EXAMENES (
     FOREIGN KEY (nro_alumno, cod_carrera) REFERENCES MATRICULAS(nro_alumno, cod_carrera),
     FOREIGN KEY (cod_carrera, cod_materia) REFERENCES MATERIAS(cod_carrera, cod_materia)
 );
-
 /*Mostrar nro_alumno, nom_alumno, cod_carrera, nom_carrera y promedio de los alumnos que ingresaron en 1995 y tienen promedio >= 7 y han rendido más de 20 exámenes finales (no considerar los ausentes)*/
 SELECT nro_alumno,
     nom_alumno,
@@ -86,8 +80,6 @@ FROM (
         HAVING COUNT(*) > 20
     ) AS T
 WHERE promedio >= 7;
-
-
 /*Cantidad de materias aprobadas por el alumno 'SANCHEZ' en la carrera 'CONTADOR PUBLICO'*/
 SELECT COUNT(*)
 FROM EXAMENES,
@@ -98,8 +90,6 @@ WHERE ALUMNOS.nro_alumno = EXAMENES.nro_alumno
     AND ALUMNOS.nom_alumno = 'SANCHEZ'
     AND CARRERAS.nom_carrera = 'CONTADOR PUBLICO'
     AND EXAMENES.nota_examen >= CARRERAS.nota_aprob_examen_final;
-
-
 /*Cantidad de materias no aprobadas por el alumno 'SANCHEZ' en la carrera 'CONTADOR PUBLICO'*/
 SELECT COUNT(*)
 FROM EXAMENES,
@@ -109,9 +99,7 @@ WHERE ALUMNOS.nro_alumno = EXAMENES.nro_alumno
     AND CARRERAS.cod_carrera = EXAMENES.cod_carrera
     AND ALUMNOS.nom_alumno = 'SANCHEZ'
     AND CARRERAS.nom_carrera = 'CONTADOR PUBLICO'
-    AND EXAMENES.nota_examen < CARRERAS.nota_aprob_examen_final;
-
-
+    AND EXAMENES.nota_examenWHERE < CARRERAS.nota_aprob_examen_final;
 /*Mostrar nro_alumno y nom_alumno de aquellos alumnos que no han rendido exámenes finales de ninguna carrera desde el 1/1/99*/
 SELECT nro_alumno,
     nom_alumno
@@ -121,8 +109,6 @@ WHERE nro_alumno NOT IN (
         FROM EXAMENES
         WHERE fecha_examen >= '1999-01-01'
     );
-
-
 /*Mostrar nro_alumno y nom_alumno de aquellos alumnos de la carrera 10 que ingresaron en 1996 y tienen aprobadas todas las materias obligatorias de dicha carrera hasta el tercer cuatrimestre inclusive.*/
 SELECT nro_alumno,
     nom_alumno

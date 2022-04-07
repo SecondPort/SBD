@@ -51,7 +51,7 @@ CREATE TABLE EXAMENES (
 	FOREIGN KEY (cod_carrera, cod_materia) REFERENCES MATERIAS(cod_carrera, cod_materia)
 );
 /* 2.	Programar las siguientes consultas:
-Mostrar nro_alumno, nom_alumno, cod_carrera, nom_carrera y promedio de los alumnos que ingresaron en 1995 y tienen promedio >= 7 y han rendido más de 20 exámenes finales (no considerar los ausentes)*/
+ Mostrar nro_alumno, nom_alumno, cod_carrera, nom_carrera y promedio de los alumnos que ingresaron en 1995 y tienen promedio >= 7 y han rendido más de 20 exámenes finales (no considerar los ausentes)*/
 SELECT A.nro_alumno,
 	A.nom_alumno,
 	C.cod_carrera,
@@ -135,4 +135,37 @@ HAVING COUNT(MA.cod_materia) = (
 		FROM MATERIAS
 		WHERE cod_carrera = M.cod_carrera
 			AND optativa = FALSE
+	);
+/*Obtener los egresados que tienen el mejor promedio de cada carrera*/
+SELECT nom_alumno,
+	nom_carrera,
+	AVG(nota_examen) AS promedio
+FROM ALUMNOS,
+	CARRERAS,
+	MATERIAS,
+	MATRICULAS,
+	EXAMENES
+WHERE ALUMNOS.nro_alumno = MATRICULAS.nro_alumno
+	AND CARRERAS.cod_carrera = MATRICULAS.cod_carrera
+	AND MATERIAS.cod_carrera = MATRICULAS.cod_carrera
+	AND EXAMENES.nro_alumno = MATRICULAS.nro_alumno
+	AND EXAMENES.cod_carrera = MATRICULAS.cod_carrera
+	AND EXAMENES.cod_materia = MATERIAS.cod_materia
+GROUP BY nom_alumno,
+	nom_carrera
+HAVING AVG(nota_examen) = (
+		SELECT MAX(AVG(nota_examen))
+		FROM ALUMNOS,
+			CARRERAS,
+			MATERIAS,
+			MATRICULAS,
+			EXAMENES
+		WHERE ALUMNOS.nro_alumno = MATRICULAS.nro_alumno
+			AND CARRERAS.cod_carrera = MATRICULAS.cod_carrera
+			AND MATERIAS.cod_carrera = MATRICULAS.cod_carrera
+			AND EXAMENES.nro_alumno = MATRICULAS.nro_alumno
+			AND EXAMENES.cod_carrera = MATRICULAS.cod_carrera
+			AND EXAMENES.cod_materia = MATERIAS.cod_materia
+		GROUP BY nom_alumno,
+			nom_carrera
 	);

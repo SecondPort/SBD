@@ -1,1 +1,1 @@
-Repositorio dedicado a la materia Sistema de Bases de Datos, de la Universidad Blas Pascal
+Repositorio dedicado a almacenar trabajos de la materia Sistema de Bases de Datos, de la Universidad Blas Pascal

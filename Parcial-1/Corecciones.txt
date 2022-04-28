@@ -1,0 +1,6 @@
+Cliente: no presenta ni direccion ni telefono
+Reclamo:la relacion de parte de clientes y frabricados es una relacion de uno a cero,uno o muchos, pero para que el reclamo exista si o si se necesita un cliente y un producto, por lo que la relacion debe ser uno a uno o muchos.
+Armados: para que exista un armado, se necesita si o si, un medelo y un componente, por lo que las relaciones son de uno a uno o muchos.
+Modelos: si o si tiene que tener un tipo de electrodomestico y estos ultimos una clase,  por lo que las relaciones son de uno a uno o muchos.
+Fabricados: necesitan un modelo, al igual que las caracteristicas,  por lo que las relaciones son de uno a uno o muchos.
+

@@ -22,7 +22,6 @@
 
 Realizarlo utilizando sql
 */
-
 CREATE TABLE concesionaria(
 	nro_concesionaria INTEGER NOT NULL,
 	nom_concesionaria VARCHAR(50) NOT NULL,
